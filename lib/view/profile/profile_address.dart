@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:payuung_pribadi/misc/list_data.dart';
-import 'package:payuung_pribadi/view/profile/widgets/datepicker_widget.dart';
-import 'package:payuung_pribadi/view/profile/widgets/dropdown_widget.dart';
 import 'package:payuung_pribadi/view/profile/widgets/textfield_widget.dart';
 
 class ProfileAddress extends StatefulWidget {
@@ -103,22 +100,22 @@ class _ProfileAddressState extends State<ProfileAddress> {
                 isRequired: true,
               ),
               TextfieldWidget(
-                controller: _provinceController,
+                controller: _regencyController,
                 label: "KOTA/KABUPATEN",
                 isRequired: true,
               ),
               TextfieldWidget(
-                controller: _provinceController,
+                controller: _kecamatanController,
                 label: "KECAMATAN",
                 isRequired: true,
               ),
               TextfieldWidget(
-                controller: _provinceController,
+                controller: _kelurahanController,
                 label: "KELURAHAN",
                 isRequired: true,
               ),
               TextfieldWidget(
-                controller: _provinceController,
+                controller: _postalCodeController,
                 label: "KODE POS",
                 isRequired: true,
               ),
@@ -150,17 +147,17 @@ class _ProfileAddressState extends State<ProfileAddress> {
                       isRequired: true,
                     ),
                     TextfieldWidget(
-                      controller: _provinceDomicileController,
+                      controller: _regencyDomicileController,
                       label: "KOTA/KABUPATEN",
                       isRequired: true,
                     ),
                     TextfieldWidget(
-                      controller: _provinceDomicileController,
+                      controller: _kecamatanDomicileController,
                       label: "KECAMATAN",
                       isRequired: true,
                     ),
                     TextfieldWidget(
-                      controller: _provinceDomicileController,
+                      controller: _kelurahanDomicileController,
                       label: "KELURAHAN",
                       isRequired: true,
                     ),
