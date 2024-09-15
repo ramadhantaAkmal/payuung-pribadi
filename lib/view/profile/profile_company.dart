@@ -1,35 +1,64 @@
 import 'package:flutter/material.dart';
+import 'package:payuung_pribadi/core/boxes.dart';
+import 'package:payuung_pribadi/data/database_service.dart';
+import 'package:payuung_pribadi/data/hive_database/company.dart';
 import 'package:payuung_pribadi/misc/list_data.dart';
-import 'package:payuung_pribadi/view/profile/widgets/datepicker_widget.dart';
 import 'package:payuung_pribadi/view/profile/widgets/dropdown_widget.dart';
 import 'package:payuung_pribadi/view/profile/widgets/textfield_widget.dart';
 
-class ProfileCompany extends StatelessWidget {
+class ProfileCompany extends StatefulWidget {
   final Function previousPage;
   const ProfileCompany({super.key, required this.previousPage});
 
   @override
+  State<ProfileCompany> createState() => _ProfileCompanyState();
+}
+
+class _ProfileCompanyState extends State<ProfileCompany> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _companyNameController = TextEditingController();
+  final TextEditingController _companyAddressController =
+      TextEditingController();
+  final TextEditingController _bankNameController = TextEditingController();
+  final TextEditingController _bankBranchNameController =
+      TextEditingController();
+  final TextEditingController _accountNumberController =
+      TextEditingController();
+  final TextEditingController _accountNameController = TextEditingController();
+
+  String? position;
+  String? professionalTime;
+  String? incomeSource;
+  String? grossIncome;
+  @override
+  void initState() {
+    var company = companyBox.get(0);
+    if (company != null) {
+      var s = company as Company;
+
+      _companyNameController.text = s.companyName;
+
+      _companyAddressController.text = s.companyAddress;
+
+      _bankNameController.text = s.bankName;
+      _bankBranchNameController.text = s.bankBranchName;
+
+      _accountNumberController.text = s.accountNumber;
+
+      _accountNameController.text = s.accountName;
+
+      position = s.position;
+      professionalTime = s.professionalLifetime;
+      incomeSource = s.incomeSource;
+      grossIncome = s.incomeGrossSource;
+    }
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-    final TextEditingController _companyNameController =
-        TextEditingController();
-    final TextEditingController _companyAddressController =
-        TextEditingController();
-    final TextEditingController _bankNameController = TextEditingController();
-    final TextEditingController _bankBranchNameController =
-        TextEditingController();
-    final TextEditingController _accountNumberController =
-        TextEditingController();
-    final TextEditingController _accountNameController =
-        TextEditingController();
-
-    String position = "";
-    String professionalTime = "";
-    String incomeSource = "";
-    String grossIncome = "";
-
     return Container(
-      padding: EdgeInsets.all(8),
+      padding: const EdgeInsets.all(8),
       child: SingleChildScrollView(
         child: Form(
           key: _formKey,
@@ -39,7 +68,7 @@ class ProfileCompany extends StatelessWidget {
                 controller: _companyNameController,
                 label: "NAMA USAHA/PERUSAHAAN",
               ),
-              DatepickerWidget(
+              TextfieldWidget(
                 controller: _companyAddressController,
                 label: "ALAMAT USAHA/PERUSAHAAN",
               ),
@@ -47,6 +76,7 @@ class ProfileCompany extends StatelessWidget {
                 label: "JABATAN",
                 dropdownField: positionList,
                 hintText: "Pilih",
+                value: position,
                 cbValue: (value) {
                   position = value!;
                 },
@@ -55,6 +85,7 @@ class ProfileCompany extends StatelessWidget {
                 label: "LAMA BEKERJA",
                 dropdownField: proffessionalTime,
                 hintText: "Pilih",
+                value: professionalTime,
                 cbValue: (value) {
                   professionalTime = value!;
                 },
@@ -63,6 +94,7 @@ class ProfileCompany extends StatelessWidget {
                 label: "SUMBER PENDAPATAN",
                 dropdownField: incomeSourceList,
                 hintText: "Pilih",
+                value: incomeSource,
                 cbValue: (value) {
                   incomeSource = value!;
                 },
@@ -71,6 +103,7 @@ class ProfileCompany extends StatelessWidget {
                 label: "PENDAPATAN KOTOR PERTAHUN",
                 dropdownField: grossIncomeList,
                 hintText: "Pilih",
+                value: grossIncome,
                 cbValue: (value) {
                   grossIncome = value!;
                 },
@@ -106,13 +139,13 @@ class ProfileCompany extends StatelessWidget {
                                     RoundedRectangleBorder>(
                                   RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(7.0),
-                                      side: BorderSide(color: Colors.amber)),
+                                      side: const BorderSide(color: Colors.amber)),
                                 ),
                               ),
                               onPressed: () async {
-                                previousPage();
+                                widget.previousPage();
                               },
-                              child: Text(
+                              child: const Text(
                                 "Sebelumnya",
                                 style: TextStyle(
                                     fontSize: 16, color: Colors.amber),
@@ -136,8 +169,27 @@ class ProfileCompany extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              onPressed: () async {},
-                              child: Text(
+                              onPressed: () async {
+                                var company = Company(
+                                    companyName: _companyNameController.text,
+                                    companyAddress:
+                                        _companyAddressController.text,
+                                    position: position ?? "",
+                                    professionalLifetime:
+                                        professionalTime ?? "",
+                                    incomeSource: incomeSource ?? "",
+                                    incomeGrossSource: grossIncome ?? "",
+                                    bankName: _bankNameController.text,
+                                    bankBranchName:
+                                        _bankBranchNameController.text,
+                                    accountNumber:
+                                        _accountNumberController.text,
+                                    accountName: _accountNameController.text);
+
+                                BoxesServices.putDataCompany(company);
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text(
                                 "Simpan",
                                 style: TextStyle(
                                     fontSize: 16, color: Colors.white),

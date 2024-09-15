@@ -8,7 +8,7 @@ part of 'biodata.dart';
 
 class BiodataAdapter extends TypeAdapter<Biodata> {
   @override
-  final int typeId = 1;
+  final int typeId = 2;
 
   @override
   Biodata read(BinaryReader reader) {

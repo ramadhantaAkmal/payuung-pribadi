@@ -2,7 +2,7 @@ import 'package:hive/hive.dart';
 
 part 'company.g.dart';
 
-@HiveType(typeId: 1)
+@HiveType(typeId: 3)
 class Company {
   Company(
       {required this.companyName,

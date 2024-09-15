@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:payuung_pribadi/view/profile/profile_address.dart';
 import 'package:payuung_pribadi/view/profile/profile_biodata.dart';
 import 'package:payuung_pribadi/view/profile/profile_company.dart';
-import 'package:payuung_pribadi/view/profile/widgets/textfield_widget.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -14,7 +13,7 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   int activeStep = 0;
-  PageController _pageController = PageController();
+  final PageController _pageController = PageController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,7 +25,7 @@ class _ProfileState extends State<Profile> {
   _buildAppBar(BuildContext context) {
     return AppBar(
       centerTitle: true,
-      title: Text("Informasi Pribadi"),
+      title: const Text("Informasi Pribadi"),
     );
   }
 
@@ -65,13 +64,13 @@ class _ProfileState extends State<Profile> {
                     radius: 20,
                     backgroundColor:
                         activeStep >= 0 ? Colors.amber : Colors.amber.shade100,
-                    child: Text(
+                    child: const Text(
                       "1",
                       style: TextStyle(color: Colors.white),
                     ),
                   ),
                 ),
-                customTitle: Center(
+                customTitle: const Center(
                   child: Text(
                     "Biodata Diri",
                     style: TextStyle(fontSize: 14, color: Colors.amber),
@@ -86,10 +85,10 @@ class _ProfileState extends State<Profile> {
                     radius: 20,
                     backgroundColor:
                         activeStep >= 1 ? Colors.amber : Colors.amber.shade100,
-                    child: Text("2", style: TextStyle(color: Colors.white)),
+                    child: const Text("2", style: TextStyle(color: Colors.white)),
                   ),
                 ),
-                customTitle: Center(
+                customTitle: const Center(
                   child: Text(
                     "Alamat\nPribadi",
                     maxLines: 2,
@@ -106,10 +105,10 @@ class _ProfileState extends State<Profile> {
                     radius: 20,
                     backgroundColor:
                         activeStep >= 2 ? Colors.amber : Colors.amber.shade100,
-                    child: Text("3", style: TextStyle(color: Colors.white)),
+                    child: const Text("3", style: TextStyle(color: Colors.white)),
                   ),
                 ),
-                customTitle: Center(
+                customTitle: const Center(
                   child: Text(
                     "Informasi\nPerusahaan",
                     maxLines: 2,
@@ -123,7 +122,7 @@ class _ProfileState extends State<Profile> {
               setState(() {
                 activeStep = index;
                 _pageController.animateToPage(index,
-                    duration: Duration(milliseconds: 1),
+                    duration: const Duration(milliseconds: 1),
                     curve: Curves.bounceIn);
               });
             },
@@ -134,7 +133,7 @@ class _ProfileState extends State<Profile> {
             height: MediaQuery.sizeOf(context).height,
             child: PageView(
               controller: _pageController,
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               children: [
                 ProfileBiodata(
                   nextPage: nextPage,
@@ -157,7 +156,7 @@ class _ProfileState extends State<Profile> {
     setState(() {
       activeStep++;
       _pageController.animateToPage(activeStep,
-          duration: Duration(milliseconds: 1), curve: Curves.bounceIn);
+          duration: const Duration(milliseconds: 1), curve: Curves.bounceIn);
     });
   }
 
@@ -165,7 +164,7 @@ class _ProfileState extends State<Profile> {
     setState(() {
       activeStep--;
       _pageController.animateToPage(activeStep,
-          duration: Duration(milliseconds: 1), curve: Curves.bounceIn);
+          duration: const Duration(milliseconds: 1), curve: Curves.bounceIn);
     });
   }
 }
